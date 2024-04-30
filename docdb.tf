@@ -1,6 +1,6 @@
 resource "aws_docdb_cluster" "docdb" {
   cluster_identifier      = "roboshop-${var.ENV}-docdb"
-  engine                  = "docdb"
+  engine                  = var.DOCDB_ENGINE_VERSION
   master_username         = "admin1"
   master_password         = "roboshop1"
 #   backup_retention_period = 5
@@ -9,7 +9,6 @@ resource "aws_docdb_cluster" "docdb" {
   vpc_security_group_ids  = [aws_security_group.allow_docdb.id] 
   db_subnet_group_name    = aws_docdb_subnet_group.docdb.name
 }
-
 
 
 resource "aws_docdb_subnet_group" "docdb" {
@@ -23,9 +22,8 @@ resource "aws_docdb_subnet_group" "docdb" {
 
 
 resource "aws_docdb_cluster_instance" "cluster_instances" {
-  count              = 1
+  count              = var.DOCDB_INSTANCE_COUNT
   identifier         = "roboshop-${var.ENV}-docdb"
   cluster_identifier = aws_docdb_cluster.docdb.id
-  instance_class     = "db.t3.medium"
+  instance_class     = var.DOCDB_INSTANCE_TYPE
 }
-
