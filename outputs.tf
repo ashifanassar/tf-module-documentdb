@@ -1,5 +1,5 @@
 output "DOCDB_ENDPOINT" {
-    value = module.mongodb.DOCDB_ENDPOINT
+    value = aws_docdb_cluster.docdb.endpoint
 }
 # output "REDIS_ENDPOINT" {
 #     value = module.redis.REDIS_ENDPOINT
